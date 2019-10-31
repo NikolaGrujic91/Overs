@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using DataCollector;
 using OversDetector;
 
 namespace TestConsole
@@ -12,6 +15,7 @@ namespace TestConsole
         {
             Run();
             PrintCandidates(oversDetector.Candidates);
+            CreateMarkdownTable(oversDetector.Candidates);
             Console.ReadLine();
         }
 
@@ -39,6 +43,29 @@ namespace TestConsole
             {
                 Console.WriteLine(candidate.ToString());
             }
+        }
+
+        private static void CreateMarkdownTable(IEnumerable<Candidate> candidates)
+        {
+            var stringBuilder = new StringBuilder();
+
+            stringBuilder.AppendLine($"## {DateTime.Now:dd.MM.yyyy}");
+
+            stringBuilder.AppendLine("|   | League | Date | Home team | Away team | Over odd | Result |   |");
+            stringBuilder.AppendLine("|---|--------|------|-----------|-----------|----------|--------|---|");
+
+            int rowNumber = 1;
+
+            foreach (Candidate candidate in candidates)
+            {
+                Fixture fixture = candidate.CandidateFixture;
+                stringBuilder.AppendLine($"| {rowNumber} |{fixture.League}|{fixture.Date:dd.MM.yyyy}|{fixture.HomeTeam}|{fixture.AwayTeam}|{fixture.OverOdd:#.##}|         |   |");
+                rowNumber++;
+            }
+
+            var file = new StreamWriter($"{DateTime.Now:dd.MM.yyyy}.md");
+            file.Write(stringBuilder.ToString());
+            file.Close();
         }
     }
 }
