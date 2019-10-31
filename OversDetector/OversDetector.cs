@@ -6,10 +6,6 @@ namespace OversDetector
 {
     public class OversDetector
     {
-        #region Fields
-
-        #endregion
-
         #region Constructors
 
         public OversDetector()
@@ -37,14 +33,6 @@ namespace OversDetector
         #endregion
 
         #region Methods
-
-        public void PrintCandidates()
-        {
-            foreach (Candidate candidate in this.Candidates)
-            {
-                Console.WriteLine(candidate.ToString());
-            }
-        }
 
         public void Run()
         {

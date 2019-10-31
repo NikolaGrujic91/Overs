@@ -1,22 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using DataCollector;
+using OversDetector;
 
 namespace TestConsole
 {
-    class Program
+    internal static class Program
     {
-        static void Main(string[] args)
-        {
-            var overs = new OversDetector.OversDetector();
-            overs.Run();
-            overs.PrintCandidates();
+        private static OversDetector.OversDetector oversDetector;
 
+        private static void Main()
+        {
+            Run();
+            PrintCandidates(oversDetector.Candidates);
             Console.ReadLine();
+        }
+
+        private static void Run()
+        {
+            try
+            {
+                TryRun();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        private static void TryRun()
+        {
+            oversDetector = new OversDetector.OversDetector();
+            oversDetector.Run();
+        }
+
+        private static void PrintCandidates(IEnumerable<Candidate> candidates)
+        {
+            foreach (Candidate candidate in candidates)
+            {
+                Console.WriteLine(candidate.ToString());
+            }
         }
     }
 }
