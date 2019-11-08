@@ -37,8 +37,14 @@ namespace TestConsole
             oversDetector.Run();
         }
 
-        private static void PrintCandidates(IEnumerable<Candidate> candidates)
+        private static void PrintCandidates(List<Candidate> candidates)
         {
+            if (candidates.Count == 0)
+            {
+                Console.WriteLine("No candidate fixtures found.");
+                return;
+            }
+
             foreach (Candidate candidate in candidates)
             {
                 Console.WriteLine(candidate.ToString());
@@ -62,6 +68,8 @@ namespace TestConsole
                 stringBuilder.AppendLine($"| {rowNumber} |{fixture.League}|{fixture.Date:dd.MM.yyyy}|{fixture.HomeTeam}|{fixture.AwayTeam}|{fixture.OverOdd:#.##}|         |   |");
                 rowNumber++;
             }
+
+            stringBuilder.AppendLine("|   |        |      |           |           |          |        |   |");
 
             var file = new StreamWriter($"{DateTime.Now:dd.MM.yyyy}.md");
             file.Write(stringBuilder.ToString());
