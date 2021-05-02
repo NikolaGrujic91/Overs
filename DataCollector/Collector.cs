@@ -145,13 +145,17 @@ namespace DataCollector
                     DateTime date = this.CreateDate(values[dateIndex]);
                     string league = values[leagueIndex];
 
+                    double overOdd = overOdd = values[overOddIndex] == string.Empty ?
+                                               0.0 : 
+                                               double.Parse(values[overOddIndex], CultureInfo.InvariantCulture);
+
                     var fixture = new Fixture(values[homeTeamIndex],
                                               values[awayTeamIndex],
                                               Convert.ToInt32(values[homeScoreIndex]),
                                               Convert.ToInt32(values[awayScoreIndex]),
                                               date,
                                               league,
-                                              double.Parse(values[overOddIndex], CultureInfo.InvariantCulture));
+                                              overOdd);
 
                     if (!this.Results.ContainsKey(league))
                     {

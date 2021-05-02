@@ -28,6 +28,7 @@ namespace TestConsole
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                Console.ReadLine();
             }
         }
 
